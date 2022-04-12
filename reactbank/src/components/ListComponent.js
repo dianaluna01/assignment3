@@ -12,36 +12,23 @@ class List extends Component {
                 amount: -1,
                 date: "",
             },
-            searchText: "",
             found: false
         }
     }
 
-    handleInputChange = (event) => {
-        this.setState({searchText: event.target.value});
-    }
-
     handleSearchClick = async () => {
-        let choice = this.state.searchText;//ditto
+        let choice = document.getElementById("choice").value;
         let linkToAPI = 'https://moj-api.herokuapp.com/' + choice;
 
         try {
             let response = await axios.get(linkToAPI);
-            //below will only execute if API response is sucessful
-            //to get actual object from response you need to do
-            //response.data
             this.setState({apiData: response.data, found: true});
         } catch (error) {
             if (error.response) {
-                /*
-                 * The request was made and the server responded with a
-                 * status code that falls out of the range of 2xx
-                 */
                 console.log(error.response.data); //Not Found
                 console.log(error.response.status); //404
                 this.setState({found: false});
             }
-       
         }
     }
     
@@ -60,16 +47,19 @@ class List extends Component {
           <div className="container">
             <div className="search">
               <h3>REACT BANK</h3>
-              <input type="text" value={this.state.searchText} onChange={this.handleInputChange} placeholder="Enter credits or debits:"/>
-              <button onClick={this.handleSearchClick}>Search</button>
+              <select onChange={this.handleSearchClick} id="choice">
+                  <option value="SELECT">SELECT</option>
+                  <option value="debits">DEBIT</option>
+                  <option value="credits">CREDIT</option>
+              </select>
+
             </div>
-            { this.state.found 
+            { this.state.found
             ? <div>
-                <h1>{this.state.apiData.name}</h1>
                 <p>Transactions:</p>
                 <ul>{this.makeList()}</ul>
                 </div> 
-            : <h4>Type in "credits" or "debits" to view transactions!</h4>
+            : <h4>Make a selection!</h4>
             }
           </div>
         );
