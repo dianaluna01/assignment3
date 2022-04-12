@@ -1,12 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import Clock from './components/ClockComponent'
-//import ListComponent from './components/ListComponent'
+import List from './components/ListComponent'
 
 function App() {
   return (
     <div>
       <Clock />
+      <List />
     </div>
   );
 }
