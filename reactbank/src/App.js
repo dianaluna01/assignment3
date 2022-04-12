@@ -1,4 +1,5 @@
 import './App.css';
+import {Component} from 'react'
 import Clock from './components/ClockComponent'
 import List from './components/ListComponent'
 import Form from './components/FormComponent'
